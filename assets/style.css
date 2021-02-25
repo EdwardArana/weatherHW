@@ -1,0 +1,13 @@
+*{
+    font-family: 'Pacifico', cursive;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+  header {
+    text-align: center;
+    height: 75px;
+    background-color: gray;
+    margin-bottom: 25px;
+  }
