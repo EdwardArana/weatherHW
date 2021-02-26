@@ -1,6 +1,6 @@
 // Var section
 
-var searchFormEl = $("#search-input");
+var searchFormEl = $('#search-input');
 var button = $("#search-button");
 var current = $("#today");
 var temprature = $("#weather");
@@ -12,13 +12,14 @@ function handleSearchFormSubmit() {
     
     var city = searchFormEl.val()
 
-    var urlRequest = `https://api.openweathermap.org/data/2.5/forecast?q=${city},{state code}&units=imperial&appid=40f3a66d546be5c27e5a38084e2d3425`
+    var urlRequest = `https://api.openweathermap.org/data/2.5/forecast?q=${city},{state code}&appid=40f3a66d546be5c27e5a38084e2d3425`
 
+   
     $.ajax({
         url:urlRequest,
-        method: "GET",
+        method: 'GET',
     }).then(function (response) {
-        console.log("Ajax Reponse \n----------");
+        console.log('Ajax Reponse \n----------');
         console.log(response);
         current.text(new Date().getDate())
         temprature.text(response.list[0].main.temp + " F")
@@ -26,7 +27,7 @@ function handleSearchFormSubmit() {
     });
 }
 
-button.on("click", () => {
+button.on('click', () => {
     handleSearchFormSubmit()
 });
 
