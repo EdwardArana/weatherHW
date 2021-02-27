@@ -14,6 +14,7 @@ function handleSearchFormSubmit() {
     console.log(city);
     var urlRequest = `https://api.openweathermap.org/data/2.5/forecast/?q=${city},{state code}&units=imperial&appid=40f3a66d546be5c27e5a38084e2d3425`
 
+    
    
     $.ajax({
         url:urlRequest,
@@ -32,6 +33,8 @@ function handleSearchFormSubmit() {
                  temprature.text(data.main.temp + " F")
             }
 
+            
+
         }
     });
 
@@ -41,7 +44,15 @@ button.on('click', () => {
     handleSearchFormSubmit()
 });
 
-
+var weatherIcon = $("<img>");
+        weatherIcon.attr(
+          "src",
+          "http://openweathermap.org/img/wn/10d@2x.png", 
+        console.log(weatherIcon)
+        )
+        
+        $("#current-icon").empty();
+        $("#current-icon").append(weatherIcon);
 
 //add local storage to save previous search
 //weather need to include full UV index
@@ -56,4 +67,4 @@ button.on('click', () => {
 
 
 
-// inside IF create DIV, then create section for temp,hum,uv, and icon "card". then i need to append all of these into the div i created, then append the div with everything in it on page. 
+// inside IF create DIV, then create section for temp,hum,uv, and icon . then i need to append all of these into the div i created, then append the div with everything in it on page. 

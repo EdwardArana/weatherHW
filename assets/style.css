@@ -10,3 +10,7 @@
     height: 75px;
     margin-bottom: 25px;
   }
+
+  .card-body {
+    text-align: center;
+  }
