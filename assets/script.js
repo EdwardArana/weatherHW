@@ -6,6 +6,9 @@ var current = $("#today");
 var temprature = $("#weather");
 var humidity
 
+
+// api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
+
 function handleSearchFormSubmit() {
     
     // API for weather
@@ -13,9 +16,24 @@ function handleSearchFormSubmit() {
     var city = searchFormEl.val()
     console.log(city);
     var urlRequest = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=40f3a66d546be5c27e5a38084e2d3425`
-
     
-   
+         var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=40f3a66d546be5c27e5a38084e2d3425`
+       
+         $.ajax({
+            url:forecastUrl,
+            method: 'GET',
+        }).then(function(response){
+            console.log(response);
+            for (let index = 0; index < response.list.length; index++) {
+                if(response.list[index].dt_txt.includes("12:00:00")){
+                    console.log(response.list[index])
+                
+            }
+        }
+        })
+
+
+
     $.ajax({
         url:urlRequest,
         method: 'GET',
@@ -27,6 +45,7 @@ function handleSearchFormSubmit() {
             method: 'GET'
         }).then(function(response2) {
             console.log(response2)
+            temprature.empty()
             const card = $('<div>').addClass("card");
             // const img = $('<img>').addClass("card-img-top");
             const cardBody = $('<div>').addClass("card-body");
@@ -41,8 +60,44 @@ function handleSearchFormSubmit() {
             card.append(cardBody)
             temprature.append(card)
             
+            console.log(response.weather);
+            var weatherIcon = $("<img>");
+            weatherIcon.attr(
+          "src",
+          "http://openweathermap.org/img/wn/"+response.weather[0].icon+"@2x.png", 
+            console.log(weatherIcon)
+        )
+        
+        $("#current-icon").empty();
+        $("#current-icon").append(weatherIcon);
         })
-                    // const cardText = $('<p>').addClass("card-text").text("Hello");
+
+    });
+
+}
+
+button.on('click', () => {
+    handleSearchFormSubmit()
+});
+
+
+        var weatherList = localStorage.getItem('weatherList');
+        if(weatherList === null){
+            localStorage.setItem('weatherList', '[]');
+            weatherList = JSON.parse(localStorage.getItem('weatherList'));
+        }
+        weatherList = JSON.parse(localStorage.getItem('weatherList'));
+        console.log(weatherList);
+
+
+        
+
+
+// 40f3a66d546be5c27e5a38084e2d3425
+
+// inside IF create DIV, then create section for temp,hum,uv, and icon . then i need to append all of these into the div i created, then append the div with everything in it on page. 
+
+        // const cardText = $('<p>').addClass("card-text").text("Hello");
         // current.text(new Date().getDate())
         // temprature.text(response.list[0].main.temp + " F")
 
@@ -65,59 +120,9 @@ function handleSearchFormSubmit() {
         //             $(".card-group").append(card);
         //         // }
         //     }
-            
-           
-    
-    
-            
-
         // }
-    });
-
-}
-
-button.on('click', () => {
-    handleSearchFormSubmit()
-});
-
-var weatherIcon = $("<img>");
-        weatherIcon.attr(
-          "src",
-          "http://openweathermap.org/img/wn/10d@2x.png", 
-        console.log(weatherIcon)
-        )
-        
-        $("#current-icon").empty();
-        $("#current-icon").append(weatherIcon);
-
-
-        var weatherList = localStorage.getItem('weatherList');
-        if(weatherList === null){
-            localStorage.setItem('weatherList', '[]');
-            weatherList = JSON.parse(localStorage.getItem('weatherList'));
-        }
-        weatherList = JSON.parse(localStorage.getItem('weatherList'));
-        console.log(weatherList);
-
-
-        
-
-
-//add local storage to save previous search
-//weather need to include full UV index
-// depending on the weather UV index color will need to change color based on weather condition
-//weather must include 5 day forecast
-// set 3 if statmets to loop 
-// second apiu request for other dash req
-
-
-
-// 40f3a66d546be5c27e5a38084e2d3425
-
-
-
-// inside IF create DIV, then create section for temp,hum,uv, and icon . then i need to append all of these into the div i created, then append the div with everything in it on page. 
 
 
 
 
+        // append line 60 on html get card to show info
