@@ -4,7 +4,7 @@ var searchFormEl = $('#search-input');
 var button = $("#search-button");
 var current = $("#today");
 var temprature = $("#weather");
-
+var humidity
 
 function handleSearchFormSubmit() {
     
@@ -26,13 +26,33 @@ function handleSearchFormSubmit() {
         temprature.text(response.list[0].main.temp + " F")
 
         for(const data of response.list) {
-            console.log(data);
-            if(data.dt_txt.indexOf("12:00:00")!== -1) {
+            console.log(data.dt_txt);
+            console.log(data.dt_txt.includes("12:00:00"));
+            const date = new Date();
+            
+            if() {
                 console.log(data.dt_txt);
-                 current.text(new Date().getDate())
-                 temprature.text(data.main.temp + " F")
+                //  current.text(new Date().getDate())
+                //  temprature.text(data.main.temp + " F")
+                // for( let i = 0; i < 5; i++) {
+                    const card = $('<div>').addClass("card");
+                    const img = $('<img>').addClass("card-img-top");
+                    const cardBody = $('<div>').addClass("card-body");
+                    const cardTitle =$('<h5>').addClass("card-title").text(data.dt_txt);
+                    const cardText = $('<p>').addClass("card-text").text("Hello");
+                    
+                    
+                    // img.append(cardBody)
+                    card.append(img)
+                    cardBody.append(cardTitle, cardText)
+                    card.append(cardBody)
+                    $(".card-group").append(card);
+                // }
             }
-
+            
+           
+    
+    
             
 
         }
@@ -54,6 +74,19 @@ var weatherIcon = $("<img>");
         $("#current-icon").empty();
         $("#current-icon").append(weatherIcon);
 
+
+        var weatherList = localStorage.getItem('weatherList');
+        if(weatherList === null){
+            localStorage.setItem('weatherList', '[]');
+            weatherList = JSON.parse(localStorage.getItem('weatherList'));
+        }
+        weatherList = JSON.parse(localStorage.getItem('weatherList'));
+        console.log(weatherList);
+
+
+        
+
+
 //add local storage to save previous search
 //weather need to include full UV index
 // depending on the weather UV index color will need to change color based on weather condition
@@ -68,3 +101,7 @@ var weatherIcon = $("<img>");
 
 
 // inside IF create DIV, then create section for temp,hum,uv, and icon . then i need to append all of these into the div i created, then append the div with everything in it on page. 
+
+
+
+
