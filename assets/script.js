@@ -4,7 +4,7 @@ var searchFormEl = $('#search-input');
 var button = $("#search-button");
 var current = $("#today");
 var temprature = $("#weather");
-var humidity
+var forecast = $(".card-group");
 
 
 // api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
@@ -22,12 +22,37 @@ function handleSearchFormSubmit() {
          $.ajax({
             url:forecastUrl,
             method: 'GET',
-        }).then(function(response){
-            console.log(response);
-            for (let index = 0; index < response.list.length; index++) {
-                if(response.list[index].dt_txt.includes("12:00:00")){
-                    console.log(response.list[index])
+        }).then(function(res){
+            console.log(res);
+            forecast.empty()
+            var response;
+            for (let index = 0; index < res.list.length; index++) {
+                if(res.list[index].dt_txt.includes("12:00:00")){
+                    console.log(res.list[index])
+                    response = res.list[index]
+                    const card = $('<div>').addClass("card");
+                    // const img = $('<img>').addClass("card-img-top");
+                    const cardBody = $('<div>').addClass("card-body");
+                    const cardUlEl = $("<ul>").addClass("list-group list-group-flush");
+                    const cardListItem1 = $("<li>").addClass("list-group-item").text(response.humidity);
+                    const cardListItem2 = $("<li>").addClass("list-group-item").text(response.main.temp);
+                    const cardListItem3 = $("<li>").addClass("list-group-item").text(response.dt_txt);
+                    cardUlEl.append(cardListItem1, cardListItem2, cardListItem3);
+                    cardBody.append(cardUlEl)
+                    card.append(cardBody)
+                    var weatherIcon = $("<img>");
+                    weatherIcon.attr(
+                "src",
+                "http://openweathermap.org/img/wn/"+response.weather[0].icon+"@2x.png", 
+                    console.log(weatherIcon)
+                )
                 
+                $("#current-icon").append(weatherIcon);
+                    card.append(weatherIcon)
+                    forecast.append(card)
+
+                    console.log(response.weather);
+                    
             }
         }
         })
@@ -70,6 +95,7 @@ function handleSearchFormSubmit() {
         
         $("#current-icon").empty();
         $("#current-icon").append(weatherIcon);
+
         })
 
     });
