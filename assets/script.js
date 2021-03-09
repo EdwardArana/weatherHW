@@ -17,7 +17,7 @@ function handleSearchFormSubmit() {
     console.log(city);
     var urlRequest = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=40f3a66d546be5c27e5a38084e2d3425`
     
-         var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=40f3a66d546be5c27e5a38084e2d3425`
+         var forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=40f3a66d546be5c27e5a38084e2d3425`
        
          $.ajax({
             url:forecastUrl,
